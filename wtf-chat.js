@@ -1,15 +1,30 @@
+ENTER_KEY = 13;
+Messages = new Meteor.Collection('messages');
+
 if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to wtf-chat.";
+  Template.messages.messages = function(){
+    return Messages.find();
   };
 
-  Template.hello.events({
-    'click input' : function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
+  Template.messageForm.events = {
+    "keydown #message": function(event){
+      if(event.which == ENTER_KEY){
+        var name = document.getElementById('name');
+        var message = document.getElementById('message');
+
+        if(name.value != '' && message.value != ''){
+          Messages.insert({
+            name: name.value,
+            message: message.value,
+            datetime: new Date()
+          });
+
+          name.value = '';
+          message.value = '';
+        }
+      }
     }
-  });
+  }
 }
 
 if (Meteor.isServer) {

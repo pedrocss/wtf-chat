@@ -3,11 +3,27 @@
 </head>
 
 <body>
-  {{> hello}}
+  <h1> WTF Chat - Where maturity is obsolete</h1>
+
+  {{> messages}}
+
+  <div id="messageArea">
+    {{> messageForm}}
+  </div>
 </body>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+
+<!-- METEOR TEMPLEATES -->
+
+<template name="messages">
+  {{#each messages}}
+    <p class="message">
+      <span class="message-datetime">[{{datetime}}]</span> <strong>{{name}}:</strong> {{message}}
+    </p>
+  {{/each}}
+</template>
+
+<template name="messageForm">
+  <input type="text" id="name" placeholder="Name" />
+  <input type="textarea" id="message" placeholder="Your fucking message" />
 </template>
